@@ -88,7 +88,7 @@ def ensure_runtime_schema():
                 try:
                     conn.executescript(f.read())
                 except sqlite3.OperationalError:
-                    # Existing databases can fail on newly introduced indexes before ALTER migrations run.
+                    
                     pass
 
         scan_cols = {r["name"] for r in conn.execute("PRAGMA table_info(scans)").fetchall()}
@@ -113,9 +113,6 @@ def ensure_runtime_schema():
             """
         )
 
-        # Windows PE specialization (added when the malware-scan module merged in).
-        # Done via CREATE TABLE IF NOT EXISTS so existing v1 databases upgrade
-        # cleanly without a manual migration step.
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS pe_files (
@@ -169,24 +166,11 @@ def now_iso():
 
 
 def now_human_local():
-    """
-    Human-friendly local timestamp for the PDF cover/header banner.
-
-    Returns a string such as "May 14, 2026 · 11:42 PM".
-
-    We deliberately use `datetime.now()` (local clock as seen by the server
-    container) rather than `utcnow()`. The user complained that the PDF's
-    "Generated" timestamp looked off because it was rendering in UTC while
-    the rest of their workstation showed local time -- this aligns the
-    report header with what the user actually sees on their system clock.
-    """
+   
     now = datetime.datetime.now()
-    # %#I on Windows / %-I on Unix would strip the leading zero, but those
-    # are non-portable; use %I and post-process so the result looks right
-    # regardless of OS.
+    
     stamp = now.strftime("%b %d, %Y · %I:%M %p")
-    # Strip the leading zero on the hour ("01:42 PM" -> "1:42 PM") for a
-    # less robotic look.
+    
     stamp = stamp.replace(" 0", " ", 1) if " 0" in stamp[-9:] else stamp
     return stamp
 
@@ -225,7 +209,7 @@ def safe_update_scan(conn, scan_id: int, **fields):
         conn.execute(sql, tuple(vals))
         conn.commit()
     except sqlite3.OperationalError as e:
-        # If columns not migrated, don't kill scanning
+        
         conn.execute(
             "UPDATE scans SET error_message=? WHERE scan_id=?",
             (f"PROGRESS_UPDATE_SKIPPED: {e}", scan_id),
@@ -280,10 +264,7 @@ def create_code_target(conn, user_id: int, folder_name: str, file_count: int, to
 
 
 def create_pe_target(conn, user_id: int, file_name: str, file_size: int) -> int:
-    # PE (Windows .exe/.dll/.sys) targets piggy-back on the HOST supertype, same
-    # pattern code_targets uses, so we don't break the existing CHECK constraint
-    # on targets.target_type. The pe_files specialization row is what flags this
-    # as a malware-scan target at SELECT time.
+   
     conn.execute("INSERT INTO targets(user_id, target_type) VALUES(?, 'HOST')", (user_id,))
     target_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
     conn.execute(
