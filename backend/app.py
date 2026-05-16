@@ -24,7 +24,7 @@ from flask_jwt_extended import (
 from werkzeug.utils import secure_filename
 try:
     from androguard.core.apk import APK
-except ImportError:  # compatibility with older Androguard layouts
+except ImportError:  
     from androguard.core.bytecodes.apk import APK
 import re
 from io import BytesIO
@@ -238,7 +238,7 @@ def get_or_create_url_target(conn, user_id: int, url: str) -> int:
     return int(target_id)
 
 def create_apk_target(conn, user_id: int, file_name: str, file_size: int) -> int:
-    # Always create a new APK target (v1)
+    
     conn.execute("INSERT INTO targets(user_id, target_type) VALUES(?, 'APK')", (user_id,))
     target_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
 
@@ -400,12 +400,7 @@ def _fingerprint(alert: dict, inst: dict) -> str:
 
 
 def ingest_alerts_incremental(conn, scan_id: int, alerts: list) -> int:
-    """
-    Inserts only NEW findings for this scan.
-    Stores a wrapper JSON in findings.raw_json: {"_fp":..., "zap_alert":..., "zap_instance":...}
-    Returns number of new findings inserted on this call.
-    """
-    # existing fingerprints for this scan
+    
     existing = set()
     rows = conn.execute("SELECT raw_json FROM findings WHERE scan_id=?", (scan_id,)).fetchall()
     for r in rows:
@@ -462,7 +457,7 @@ def ingest_alerts_incremental(conn, scan_id: int, alerts: list) -> int:
 
             finding_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
 
-            # affected endpoint from instance
+            
             u = (inst.get("url") or inst.get("uri") or a.get("url") or "").strip()
             if u:
                 conn.execute("""
@@ -544,7 +539,6 @@ def analyze_apk_static(apk_path: str) -> dict:
 
     findings = []
 
-    # --- Manifest flags (application tag) ---
     dbg = _boolish(_apk_attr(a, "application", "debuggable"))
     if dbg is True:
         findings.append({
@@ -555,7 +549,7 @@ def analyze_apk_static(apk_path: str) -> dict:
                 "and can make reverse engineering / runtime inspection easier in production.\n"
                 "Impact: attackers may abuse debug functionality, extract sensitive info, or weaken protections."
             ),
-            "cwe_id": 489,  # CWE-489 Active Debug Code :contentReference[oaicite:1]{index=1}
+            "cwe_id": 489,  
             "evidence_url": "AndroidManifest.xml",
             "evidence_text": "android:debuggable=\"true\"",
             "remediation_text": "Disable debugging for release builds. Ensure release buildTypes set debuggable false.",
@@ -563,7 +557,7 @@ def analyze_apk_static(apk_path: str) -> dict:
         })
 
     allow_backup = _boolish(_apk_attr(a, "application", "allowBackup"))
-    # Note: default can be true if not set; treat “true” explicitly as a finding
+    
     if allow_backup is True:
         findings.append({
             "title": "App backups enabled (android:allowBackup=true)",
@@ -590,18 +584,18 @@ def analyze_apk_static(apk_path: str) -> dict:
                 "Allowing cleartext traffic can permit sensitive data exposure over HTTP.\n"
                 "Impact: network attackers (same Wi-Fi, ISP, compromised router) can sniff/modify traffic."
             ),
-            "cwe_id": 319,  # CWE-319 Cleartext Transmission of Sensitive Information :contentReference[oaicite:2]{index=2}
+            "cwe_id": 319,  
             "evidence_url": "AndroidManifest.xml",
             "evidence_text": "android:usesCleartextTraffic=\"true\"",
             "remediation_text": "Disable cleartext traffic and enforce HTTPS with a proper Network Security Config.",
             "ref_url": "https://cwe.mitre.org/data/definitions/319.html",
         })
 
-    # --- Exported components (CWE-926) ---
+   
     def comp_exported(kind: str, name: str) -> bool:
         ex = _apk_attr(a, kind, "exported", name=name)
         if ex is None:
-            # On older Android versions, intent-filters can imply exported=true.
+            
             try:
                 if kind in {"activity", "service", "receiver"} and a.get_intent_filters(kind, name):
                     return True
@@ -629,7 +623,7 @@ def analyze_apk_static(apk_path: str) -> dict:
                             f"The component '{cname}' appears exported and does not declare an access permission.\n"
                             "Impact: other apps may invoke this component and potentially reach sensitive logic or data."
                         ),
-                        "cwe_id": 926,  # CWE-926 Improper Export of Android Application Components :contentReference[oaicite:3]{index=3}
+                        "cwe_id": 926,  
                         "evidence_url": "AndroidManifest.xml",
                         "evidence_text": f"{kind} name=\"{cname}\" exported=true (or implied) without android:permission",
                         "remediation_text": (
@@ -639,7 +633,7 @@ def analyze_apk_static(apk_path: str) -> dict:
                         "ref_url": "https://cwe.mitre.org/data/definitions/926.html",
                     })
 
-    # --- Quick “dangerous permissions” signal (not always a bug) ---
+    
     dangerous = [p for p in perms if any(x in p for x in [
         "READ_SMS", "RECEIVE_SMS", "READ_CONTACTS", "RECORD_AUDIO", "ACCESS_FINE_LOCATION"
     ])]
@@ -658,8 +652,7 @@ def analyze_apk_static(apk_path: str) -> dict:
             "ref_url": None,
         })
 
-    # --- Simple hardcoded secret heuristic (string patterns) ---
-    # This is noisy; keep INFO/MEDIUM only.
+    
     try:
         all_strings = " ".join(a.get_strings() or [])
         patterns = [
@@ -1367,8 +1360,7 @@ def malware_scan_worker(scan_id: int, target_id: int, pe_path: str, display_name
         PE_PERSIST       – writing findings to the DB
         DONE / FAILED    – terminal
     """
-    # Import inside the worker, not at module top: scientific stack is heavy
-    # and the rest of VSAWA shouldn't pay the import cost on cold start.
+    
     from malware_scan.scanner import scan_pe_file
 
     conn = get_conn()
@@ -1385,9 +1377,7 @@ def malware_scan_worker(scan_id: int, target_id: int, pe_path: str, display_name
             error_message="EXTRACTING_FEATURES",
         )
 
-        # scan_pe_file already runs all three models internally; we surface a
-        # mid-progress checkpoint right before it for UX, even though it's a
-        # single blocking call from the worker's perspective.
+     
         safe_update_scan(
             conn, scan_id,
             phase="PE_PREDICT", spider_progress=40, ascan_progress=60,
@@ -1401,8 +1391,7 @@ def malware_scan_worker(scan_id: int, target_id: int, pe_path: str, display_name
             error_message="PERSISTING_FINDINGS",
         )
 
-        # Update the pe_files specialization row with the aggregate verdict +
-        # MD5 so the Reports page can show it without re-running anything.
+       
         summary_json = json.dumps({
             "overall_prediction": report["overall_prediction"],
             "malicious_votes":    report["malicious_votes"],
@@ -1510,10 +1499,7 @@ def malware_scan_worker(scan_id: int, target_id: int, pe_path: str, display_name
             )
         conn.commit()
 
-        # Best-effort cleanup of the uploaded PE binary. We do this in a
-        # try/except because failing to remove it shouldn't fail the scan
-        # itself — the file is in /data/uploads which is bind-mounted, so the
-        # operator can prune it manually if needed.
+        
         try:
             if os.path.exists(pe_path):
                 os.remove(pe_path)
@@ -1943,10 +1929,6 @@ def create_folder_scan():
     return jsonify({"scan_id": int(scan_id), "status": "RUNNING", "file_count": saved_count}), 202
 
 
-# Cap PE uploads. Malware samples are usually a few MB; legitimate apps
-# can be larger but it's reasonable to require the user to split anything
-# bigger than this manually. Lives separately from MAX_UPLOAD_MB so we don't
-# accidentally raise the global multipart limit.
 MAX_PE_UPLOAD_MB = int(os.environ.get("MAX_PE_UPLOAD_MB", "60"))
 ALLOWED_PE_EXTS = {".exe", ".dll", ".sys"}
 
@@ -1982,10 +1964,7 @@ def create_malware_scan():
                      f"Allowed PE extensions: {', '.join(sorted(ALLOWED_PE_EXTS))}"
         }), 400
 
-    # Save with a timestamp prefix into the existing UPLOAD_DIR (bind-mounted
-    # to ./data/uploads on the host). The malware_scan_worker deletes the file
-    # after the scan finishes; on worker failure the file is left in place for
-    # post-mortem inspection.
+   
     save_path = os.path.join(UPLOAD_DIR, f"{int(time.time())}_pe_{filename}")
     f.save(save_path)
 
@@ -2479,22 +2458,7 @@ def chat():
         return jsonify({"error": f"chat failed: {type(e).__name__}: {e}"}), 500
 
 
-# ------------------------------------------------------------------------------------------------------------------
-# OWASP knowledge-base browser endpoint
-#
-# The frontend's "Vulnerability DB" page used to be a hardcoded list of 10
-# single-paragraph blurbs. The chatbot subsystem already loads a much richer
-# OWASP-Top-10 + CWE knowledge base from backend/chatbot/knowledge_base/*.json,
-# so it's wasteful to duplicate that data on the frontend. This route hands
-# the full KB back as a single JSON document; the frontend can then render
-# each OWASP category with all its CWEs, their impact, prevention steps,
-# fixation steps, and mitigation guidance.
-#
-# Severity is derived per-CWE from the impact phrasing using the existing
-# `estimate_severity` heuristic from the chat KB service. The endpoint is
-# read-only and only requires authentication so unauthenticated visitors
-# can't enumerate the corpus.
-# ------------------------------------------------------------------------------------------------------------------
+
 @app.get("/api/kb/owasp")
 @jwt_required()
 def kb_owasp():
@@ -2514,10 +2478,7 @@ def kb_owasp():
                 "name":        cwe.get("name"),
                 "description": cwe.get("description"),
                 "impact":      cwe.get("impact"),
-                # `prevention` / `fixation` / `mitigation` are stored as lists
-                # of short strings in the KB. The frontend wants to render
-                # them as bullet lists, so pass them through verbatim and
-                # coerce non-list values into single-item lists for safety.
+                
                 "prevention":  cwe.get("prevention") if isinstance(cwe.get("prevention"), list) else [cwe.get("prevention")] if cwe.get("prevention") else [],
                 "fixation":    cwe.get("fixation")   if isinstance(cwe.get("fixation"),   list) else [cwe.get("fixation")]   if cwe.get("fixation")   else [],
                 "mitigation":  cwe.get("mitigation") if isinstance(cwe.get("mitigation"), list) else [cwe.get("mitigation")] if cwe.get("mitigation") else [],
@@ -2549,23 +2510,7 @@ def get_scan_report(scan_id):
         conn.close()
 
 
-# ------------------------------------------------------------------------------------------------------------------
-# PDF report generation
-#
-# Design notes:
-#   * Light, print-friendly background (the previous dark cyber theme prints
-#     poorly and reads as "personal project" rather than "professional security
-#     deliverable"). Brand accent is kept to header band, section rules, and
-#     severity badges so the report still feels distinctly VSAWA.
-#   * Severity colours follow common pentest-report conventions: red for
-#     critical/high, amber for medium, green for low, blue for info.
-#   * Single-pass structure: cover meta -> executive summary -> findings
-#     overview -> per-finding detail -> recommendations. No competing visual
-#     gauges; one bar chart for severity distribution and one risk score line.
-#   * MALWARE target_type is handled in the same code path as URL/APK/FOLDER --
-#     it just contributes extra meta-rows and tweaks the executive summary so
-#     the same `download_pdf` route can render reports for every scan type.
-# ------------------------------------------------------------------------------------------------------------------
+
 @app.get("/api/scans/<int:scan_id>/report/pdf")
 @jwt_required()
 def download_pdf(scan_id):
@@ -2594,8 +2539,7 @@ def download_pdf(scan_id):
             author="VSAWA Vulnerability Scanner",
         )
 
-        # Professional light theme. All colours pulled from a single palette so
-        # severity tinting and section accents stay coherent on a printed page.
+
         theme = {
             "page":      colors.HexColor("#ffffff"),
             "ink":       colors.HexColor("#0f172a"),  # body text
@@ -2704,7 +2648,7 @@ def download_pdf(scan_id):
         duration = format_duration(scan.get("started_at"), scan.get("finished_at"))
         total_findings = int(scan.get("total_findings") or 0)
 
-        # ----- target-type-specific contextual blurb (executive summary supplement)
+        
         def target_lens_text():
             if target_type == "URL":
                 return (
@@ -2733,7 +2677,7 @@ def download_pdf(scan_id):
                 )
             return "Static review of recorded scan data."
 
-        # ----- summary paragraph
+        # summary paragraph
         def overview_text():
             if total_findings == 0:
                 return (
@@ -2752,44 +2696,40 @@ def download_pdf(scan_id):
                 f"shortly afterwards because they often become exploitable when chained."
             )
 
-        # ----- cover header drawn on every page
+        #  cover header 
         def draw_page(canvas, _doc):
             canvas.saveState()
             width, height = A4
 
-            # White page background -- explicit so it overrides any reader default.
+           
             canvas.setFillColor(theme["page"])
             canvas.rect(0, 0, width, height, stroke=0, fill=1)
 
-            # Header band: solid brand strip with title + meta on the right.
             band_h = 24 * mm
             canvas.setFillColor(theme["brand"])
             canvas.rect(0, height - band_h, width, band_h, stroke=0, fill=1)
 
-            # Thin accent rule under the band to break the colour cleanly.
+            
             canvas.setFillColor(theme["accent"])
             canvas.rect(0, height - band_h - 1.4 * mm, width, 1.4 * mm, stroke=0, fill=1)
 
-            # Wordmark
+            
             canvas.setFillColor(colors.white)
             canvas.setFont("Helvetica-Bold", 16)
             canvas.drawString(18 * mm, height - 14 * mm, "VSAWA")
             canvas.setFont("Helvetica", 9.5)
             canvas.drawString(18 * mm, height - 19.5 * mm, "Security Assessment Report")
 
-            # Right-aligned meta
+            
             canvas.setFont("Helvetica", 9)
             canvas.drawRightString(width - 18 * mm, height - 14 * mm,
                                    f"Report #{scan_id}  •  {target_type}")
             canvas.setFont("Helvetica", 8)
-            # Use local-clock human format ("May 14, 2026 · 11:42 PM") not the
-            # raw UTC ISO string. The previous "Generated 2026-05-14T05:31:25Z"
-            # was technically accurate but read as a debug log entry, not a
-            # report header.
+            
             canvas.drawRightString(width - 18 * mm, height - 19.5 * mm,
                                    f"Generated {now_human_local()}")
 
-            # Footer rule + page numbers
+        
             canvas.setStrokeColor(theme["rule"])
             canvas.setLineWidth(0.6)
             canvas.line(18 * mm, 12 * mm, width - 18 * mm, 12 * mm)
@@ -2801,7 +2741,7 @@ def download_pdf(scan_id):
                                    f"Page {_doc.page}")
             canvas.restoreState()
 
-        # ----- visual: clean horizontal bar chart for severity distribution
+       
         def severity_chart(counts):
             chart_w = 174 * mm
             chart_h = 56 * mm
@@ -2841,7 +2781,7 @@ def download_pdf(scan_id):
                 y -= 8 * mm
             return d
 
-        # ----- visual: posture score gauge (single horizontal track)
+   
         def score_gauge(score_val):
             w = 174 * mm
             h = 22 * mm
@@ -2866,7 +2806,7 @@ def download_pdf(scan_id):
                          fillColor=theme["ink"], textAnchor="end"))
             return d
 
-        # ----- small KPI card used in the cover summary strip
+        
         def kpi_card(label, value, accent):
             tbl = Table(
                 [[Paragraph(escape(label), styles["VS_FieldLabel"])],
@@ -3088,8 +3028,7 @@ def download_pdf(scan_id):
             ("VALIGN",        (0, 0), (-1, -1), "TOP"),
         ]))
 
-        # KPI cards row (2 x 2 grid). Compact, lives right under the exec
-        # summary paragraph.
+       
         kpi_grid = Table([
             [kpi_card("Total findings", total_findings,           theme["accent"]),
              kpi_card("Highest severity", highest,                sev_color(highest if highest != 'NONE' else 'INFO'))],
@@ -3103,14 +3042,7 @@ def download_pdf(scan_id):
             ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
         ]))
 
-        # ----- assemble story
-        #
-        # Each major section is opened by wrapping the H2 heading together
-        # with its first content block inside a KeepTogether. This prevents
-        # the reportlab layout engine from leaving a heading stranded at the
-        # bottom of one page while pushing its content to the next (which is
-        # what produced the "Detailed Findings" heading + a blank gap before
-        # the actual findings on the following page).
+        
         story = []
 
         # Section 1: Executive Summary
@@ -3154,12 +3086,7 @@ def download_pdf(scan_id):
             ]))
             story.append(Spacer(1, 12))
 
-        # Section 5: Detailed findings -- the original orphan-heading bug
-        # lived here. The heading was appended separately from the first
-        # finding_block, so reportlab was free to break between them. We now
-        # bind the heading to the first finding (or to the empty-state
-        # paragraph) inside a KeepTogether; the remaining findings can still
-        # flow normally to subsequent pages.
+        # Section 5: Detailed findings
         if not findings:
             story.append(KeepTogether([
                 Paragraph("Detailed Findings", styles["VS_H2"]),
@@ -3196,9 +3123,7 @@ def download_pdf(scan_id):
         if scan.get("error_message"):
             recs.append(f"System note recorded by scanner: {scan.get('error_message')}")
 
-        # Bind the Recommendations heading to its first two bullets so the
-        # heading doesn't get orphaned at the bottom of the last findings
-        # page either.
+       
         rec_paragraphs = [
             Paragraph(f"&bull;&nbsp; {escape(rec)}", styles["VS_Body"])
             for rec in recs
