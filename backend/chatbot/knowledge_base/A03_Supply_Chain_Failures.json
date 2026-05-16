@@ -1,0 +1,183 @@
+{
+  "owasp_id": "A03",
+  "category": "Software Supply Chain Failures",
+  "cwes": [
+    {
+      "cwe_id": "CWE-494",
+      "name": "Code Without Integrity Check",
+      "description": "Code is used without verifying its integrity or authenticity.",
+      "impact": "Malicious code execution, system compromise.",
+      "prevention": [
+        "Use cryptographic hash verification",
+        "Use signed packages",
+        "Download code only from trusted sources"
+      ],
+      "fixation": [
+        "Add integrity verification",
+        "Remove unsigned code",
+        "Update dependency sources"
+      ],
+      "mitigation": [
+        "Monitor package integrity",
+        "Audit dependency sources"
+      ]
+    },
+    {
+      "cwe_id": "CWE-829",
+      "name": "Untrusted Source Inclusion",
+      "description": "Including code from untrusted external sources.",
+      "impact": "Backdoors, malware inclusion.",
+      "prevention": [
+        "Allow only approved repositories",
+        "Use internal package mirrors",
+        "Verify supplier authenticity"
+      ],
+      "fixation": [
+        "Remove untrusted sources",
+        "Replace with verified sources"
+      ],
+      "mitigation": [
+        "Monitor third-party imports"
+      ]
+    },
+    {
+      "cwe_id": "CWE-830",
+      "name": "Untrusted Web Functionality",
+      "description": "External web code used without validation.",
+      "impact": "Remote code manipulation.",
+      "prevention": [
+        "Avoid dynamic remote loading",
+        "Use trusted CDNs",
+        "Pin library versions"
+      ],
+      "fixation": [
+        "Remove unsafe web dependencies",
+        "Use local verified copies"
+      ],
+      "mitigation": [
+        "Monitor external calls"
+      ]
+    },
+    {
+      "cwe_id": "CWE-345",
+      "name": "Insufficient Data Authenticity Verification",
+      "description": "Data source authenticity not verified.",
+      "impact": "Fake or malicious data usage.",
+      "prevention": [
+        "Use digital signatures",
+        "Verify sender identity",
+        "Use secure communication"
+      ],
+      "fixation": [
+        "Add authenticity checks",
+        "Reject unsigned data"
+      ],
+      "mitigation": [
+        "Log data source anomalies"
+      ]
+    },
+    {
+      "cwe_id": "CWE-353",
+      "name": "Missing Integrity Check",
+      "description": "No integrity validation for files or updates.",
+      "impact": "Tampered software execution.",
+      "prevention": [
+        "Use checksum validation",
+        "Verify file hashes"
+      ],
+      "fixation": [
+        "Implement integrity checks",
+        "Replace corrupted files"
+      ],
+      "mitigation": [
+        "Monitor file changes"
+      ]
+    },
+    {
+      "cwe_id": "CWE-426",
+      "name": "Untrusted Search Path",
+      "description": "System searches untrusted directories first.",
+      "impact": "Execution of malicious binaries.",
+      "prevention": [
+        "Use absolute paths",
+        "Restrict executable directories"
+      ],
+      "fixation": [
+        "Fix search order",
+        "Remove unsafe paths"
+      ],
+      "mitigation": [
+        "Monitor execution paths"
+      ]
+    },
+    {
+      "cwe_id": "CWE-502",
+      "name": "Unsafe Deserialization",
+      "description": "Untrusted serialized data is deserialized.",
+      "impact": "Remote code execution.",
+      "prevention": [
+        "Avoid native deserialization",
+        "Use safe data formats",
+        "Validate serialized input"
+      ],
+      "fixation": [
+        "Replace unsafe deserialization",
+        "Block untrusted input"
+      ],
+      "mitigation": [
+        "Monitor deserialization errors"
+      ]
+    },
+    {
+      "cwe_id": "CWE-912",
+      "name": "Hidden Functionality",
+      "description": "Hidden or undocumented features in software.",
+      "impact": "Backdoor exploitation.",
+      "prevention": [
+        "Audit third-party code",
+        "Disable unused features"
+      ],
+      "fixation": [
+        "Remove hidden functions",
+        "Refactor unsafe modules"
+      ],
+      "mitigation": [
+        "Code audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-915",
+      "name": "Dynamic Attribute Modification",
+      "description": "Runtime modification of critical attributes.",
+      "impact": "Logic manipulation.",
+      "prevention": [
+        "Restrict dynamic updates",
+        "Use immutable objects"
+      ],
+      "fixation": [
+        "Block unsafe modifications",
+        "Validate attribute changes"
+      ],
+      "mitigation": [
+        "Monitor runtime behavior"
+      ]
+    },
+    {
+      "cwe_id": "CWE-1104",
+      "name": "Unmaintained Component",
+      "description": "Using outdated or unsupported components.",
+      "impact": "Known vulnerabilities exploited.",
+      "prevention": [
+        "Track component lifecycle",
+        "Use actively maintained libraries"
+      ],
+      "fixation": [
+        "Replace outdated components",
+        "Update dependencies"
+      ],
+      "mitigation": [
+        "Dependency monitoring"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "owasp_id": "A10",
+  "category": "Exception Handling",
+  "cwes": [
+    {
+      "cwe_id": "CWE-248",
+      "name": "Uncaught Exception",
+      "description": "Uncaught Exception occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use global exception handlers",
+        "Catch and handle all critical exceptions",
+        "Never expose stack traces to users"
+      ],
+      "fixation": [
+        "Add missing try-catch blocks",
+        "Fix exception handling logic",
+        "Hide technical error details"
+      ],
+      "mitigation": [
+        "Log exceptions securely",
+        "Alert on frequent crashes",
+        "Monitor application stability"
+      ]
+    },
+    {
+      "cwe_id": "CWE-391",
+      "name": "Unchecked Error Condition",
+      "description": "Unchecked Error Condition occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Check return values and error codes",
+        "Handle failure cases explicitly",
+        "Validate function outcomes"
+      ],
+      "fixation": [
+        "Add missing error checks",
+        "Fix ignored return values",
+        "Refactor unsafe logic"
+      ],
+      "mitigation": [
+        "Log error conditions",
+        "Monitor failed operations",
+        "Alert on repeated failures"
+      ]
+    },
+    {
+      "cwe_id": "CWE-400",
+      "name": "Uncontrolled Resource Consumption",
+      "description": "Uncontrolled Resource Consumption occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Limit resource usage",
+        "Apply timeouts and quotas",
+        "Validate input size"
+      ],
+      "fixation": [
+        "Add rate limiting",
+        "Fix infinite loops",
+        "Control memory usage"
+      ],
+      "mitigation": [
+        "Monitor CPU and memory usage",
+        "Alert on spikes",
+        "Throttle abusive users"
+      ]
+    },
+    {
+      "cwe_id": "CWE-460",
+      "name": "Improper Cleanup on Error",
+      "description": "Improper Cleanup on Error occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Always release resources on error",
+        "Use finally blocks",
+        "Close files and connections properly"
+      ],
+      "fixation": [
+        "Add missing cleanup logic",
+        "Fix resource leaks",
+        "Refactor error handling paths"
+      ],
+      "mitigation": [
+        "Monitor open resources",
+        "Alert on leaks",
+        "Restart unstable services"
+      ]
+    },
+    {
+      "cwe_id": "CWE-703",
+      "name": "Improper Handling of Exceptions",
+      "description": "Improper Handling of Exceptions occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Handle all known exception types",
+        "Use centralized error handling",
+        "Fail securely"
+      ],
+      "fixation": [
+        "Fix broken exception logic",
+        "Remove silent failures",
+        "Add secure fallback behavior"
+      ],
+      "mitigation": [
+        "Log exception patterns",
+        "Alert on critical failures",
+        "Monitor error trends"
+      ]
+    },
+    {
+      "cwe_id": "CWE-755",
+      "name": "Improper Error Handling",
+      "description": "Improper Error Handling occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use consistent error handling strategy",
+        "Do not reveal internal errors",
+        "Return safe error messages"
+      ],
+      "fixation": [
+        "Fix inconsistent error handling",
+        "Hide internal error details",
+        "Standardize error responses"
+      ],
+      "mitigation": [
+        "Monitor error responses",
+        "Alert on abnormal errors",
+        "Review error logs regularly"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "owasp_id": "A01",
+  "category": "Broken Access Control",
+  "cwes": [
+    {
+      "cwe_id": "CWE-22",
+      "name": "Path Traversal",
+      "description": "Improper validation of file paths allowing attackers to access restricted directories.",
+      "impact": "Unauthorized file access, data leakage, system compromise.",
+      "prevention": [
+        "Validate and normalize file paths",
+        "Use allowlist of permitted directories",
+        "Block ../ and similar traversal patterns",
+        "Run app with minimum file permissions"
+      ],
+      "fixation": [
+        "Remove unsafe path handling logic",
+        "Implement canonical path validation",
+        "Restrict file access scope",
+        "Test with traversal payloads"
+      ],
+      "mitigation": [
+        "Use filesystem sandboxing",
+        "Monitor file access logs",
+        "Apply OS-level permission hardening"
+      ]
+    },
+    {
+      "cwe_id": "CWE-23",
+      "name": "Relative Path Traversal",
+      "description": "Relative paths allow bypassing directory restrictions.",
+      "impact": "Access to sensitive system files.",
+      "prevention": [
+        "Disallow relative path usage",
+        "Force absolute safe base directory",
+        "Use path resolution checks"
+      ],
+      "fixation": [
+        "Replace relative path logic",
+        "Add server-side validation",
+        "Test using ../ payloads"
+      ],
+      "mitigation": [
+        "Filesystem permission isolation",
+        "Audit file operations"
+      ]
+    },
+    {
+      "cwe_id": "CWE-59",
+      "name": "Link Following",
+      "description": "Symbolic links redirect access to restricted files.",
+      "impact": "Unauthorized access via symlink abuse.",
+      "prevention": [
+        "Disable symbolic link following",
+        "Verify real file path before access"
+      ],
+      "fixation": [
+        "Block symlink resolution",
+        "Validate resolved path"
+      ],
+      "mitigation": [
+        "Monitor file linking",
+        "Restrict symlink permissions"
+      ]
+    },
+    {
+      "cwe_id": "CWE-200",
+      "name": "Information Exposure",
+      "description": "Sensitive information is accessible without authorization.",
+      "impact": "Data leaks, privacy violations.",
+      "prevention": [
+        "Restrict sensitive endpoints",
+        "Mask sensitive data",
+        "Enforce authorization checks"
+      ],
+      "fixation": [
+        "Identify exposed endpoints",
+        "Add access control",
+        "Limit response data"
+      ],
+      "mitigation": [
+        "Enable access logging",
+        "Monitor unusual data access"
+      ]
+    },
+    {
+      "cwe_id": "CWE-284",
+      "name": "Improper Access Control",
+      "description": "Missing or weak access restrictions.",
+      "impact": "Privilege escalation.",
+      "prevention": [
+        "Implement RBAC/ABAC",
+        "Validate user permissions on every request"
+      ],
+      "fixation": [
+        "Add missing checks",
+        "Fix IDOR issues"
+      ],
+      "mitigation": [
+        "Audit permissions",
+        "Log access failures"
+      ]
+    },
+    {
+      "cwe_id": "CWE-285",
+      "name": "Improper Authorization",
+      "description": "Users can access unauthorized actions.",
+      "impact": "Unauthorized operations.",
+      "prevention": [
+        "Check authorization server-side",
+        "Avoid client-only checks"
+      ],
+      "fixation": [
+        "Implement backend permission checks",
+        "Test role boundaries"
+      ],
+      "mitigation": [
+        "Access monitoring",
+        "Alert on violations"
+      ]
+    },
+    {
+      "cwe_id": "CWE-269",
+      "name": "Improper Privilege Management",
+      "description": "Privileges not correctly assigned.",
+      "impact": "Privilege escalation.",
+      "prevention": [
+        "Use least privilege principle",
+        "Separate admin and user roles"
+      ],
+      "fixation": [
+        "Review privilege assignments",
+        "Fix excessive permissions"
+      ],
+      "mitigation": [
+        "Audit roles regularly"
+      ]
+    },
+    {
+      "cwe_id": "CWE-276",
+      "name": "Incorrect Default Permissions",
+      "description": "Default permissions too permissive.",
+      "impact": "Unauthorized file or system access.",
+      "prevention": [
+        "Set secure default permissions",
+        "Restrict new resources by default"
+      ],
+      "fixation": [
+        "Update insecure defaults",
+        "Reconfigure permissions"
+      ],
+      "mitigation": [
+        "Permission audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-352",
+      "name": "Cross-Site Request Forgery",
+      "description": "Unauthorized commands executed via victim session.",
+      "impact": "Account actions without consent.",
+      "prevention": [
+        "Use CSRF tokens",
+        "Validate origin headers",
+        "Use SameSite cookies"
+      ],
+      "fixation": [
+        "Add CSRF protection",
+        "Secure forms and APIs"
+      ],
+      "mitigation": [
+        "Monitor unusual requests"
+      ]
+    },
+    {
+      "cwe_id": "CWE-639",
+      "name": "Authorization Bypass",
+      "description": "Attackers bypass access checks.",
+      "impact": "Unauthorized system control.",
+      "prevention": [
+        "Enforce authorization centrally",
+        "Avoid hardcoded bypass logic"
+      ],
+      "fixation": [
+        "Remove bypass paths",
+        "Secure all endpoints"
+      ],
+      "mitigation": [
+        "Log access failures"
+      ]
+    },
+    {
+      "cwe_id": "CWE-732",
+      "name": "Incorrect Permission Assignment",
+      "description": "Permissions assigned wrongly.",
+      "impact": "Unauthorized actions.",
+      "prevention": [
+        "Validate permission logic",
+        "Use role templates"
+      ],
+      "fixation": [
+        "Fix assignment logic",
+        "Reassign correct roles"
+      ],
+      "mitigation": [
+        "Audit permission usage"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: zap
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8080
+      -config api.disablekey=true
+      -config api.addrs.addr.name=.*
+      -config api.addrs.addr.regex=true
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    # makes "host.docker.internal" resolvable inside Linux containers too -- for scanning host services
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      # wait until the ZAP API answers before backend starts
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/JSON/core/view/version/ | grep -q version"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 10s
+    networks:
+      - vsawa_net
+
+  backend:
+    build: ./backend
+    container_name: backend
+    command: >
+      sh -c "python init_db.py &&
+         gunicorn -b 0.0.0.0:5000 'app:app'
+         --timeout 600
+         --graceful-timeout 30
+         --workers 1
+         --threads 4
+         --log-level debug
+         --access-logfile -
+         --error-logfile -
+         --capture-output"
+    environment:
+      - PYTHONUNBUFFERED=1
+      # use the stable container hostname above -- avoids weird DNS/name issues
+      - ZAP_BASEURL=http://zap:8080
+      - DB_PATH=/data/vsawa.db
+      - JWT_SECRET_KEY=super-long-random-string-change-me
+      - ALLOW_PRIVATE_TARGETS=1
+      - UPLOAD_DIR=/data/uploads
+      - MAX_UPLOAD_MB=300
+      - LM_STUDIO_BASE_URL=http://host.docker.internal:1234/v1
+      - MAX_CODE_FILES=20000
+      - LM_STUDIO_MODEL=qwen2.5-3b-instruct
+    volumes:
+      - ./data:/data
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    depends_on:
+      zap:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - vsawa_net
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - vsawa_net
+
+networks:
+  vsawa_net:
+    driver: bridge

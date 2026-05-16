@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.reports-page {
+  min-height: 100vh;
+  padding: 40px 40px 60px;
+  color: #ffffff;
+  background: linear-gradient(160deg, #02060f 0%, #030712 50%, #050508 100%);
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+/* ====================================================================
+   Header
+   ==================================================================== */
+.reports-header {
+  position: relative;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.reports-header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #f1f5f9;
+  letter-spacing: -0.5px;
+}
+
+.reports-header p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+  max-width: 720px;
+  line-height: 1.55;
+}
+
+/* ====================================================================
+   Card container
+   ==================================================================== */
+.reports-card {
+  position: relative;
+  background: rgba(8, 15, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.reports-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.reports-card-header h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ====================================================================
+   Search input
+   ==================================================================== */
+.reports-search-wrap {
+  position: relative;
+}
+
+.reports-search-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+.reports-search {
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+  padding: 10px 14px 10px 38px;
+  border-radius: 10px;
+  width: 260px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.reports-search:focus {
+  border-color: #00f2fe;
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.08);
+}
+
+/* ====================================================================
+   Table layout
+   ----------------------------------------------------------------
+   Six columns matched 1-to-1 with the JSX cells:
+      Asset Detail | Date | Findings | Status | Method | Actions
+   The previous CSS had only 5 columns which caused the row cells to
+   wrap unpredictably and made the page look misaligned.
+   ==================================================================== */
+.reports-table {
+  width: 100%;
+}
+
+.reports-table-head,
+.reports-table-row {
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 2.4fr)    /* Asset Detail */
+    minmax(120px, 1.2fr)    /* Audit Date */
+    minmax(90px,  0.9fr)    /* Findings */
+    minmax(110px, 1fr)      /* Status */
+    minmax(120px, 1.1fr)    /* Method */
+    minmax(150px, 1.2fr);   /* Actions */
+  gap: 16px;
+  align-items: center;
+}
+
+.reports-table-head {
+  padding: 0 14px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.reports-table-head span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reports-table-row {
+  padding: 16px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s ease;
+  border-radius: 10px;
+  margin-top: 2px;
+  min-height: 64px;
+}
+
+.reports-table-row:hover {
+  background: rgba(0, 242, 254, 0.04);
+}
+
+/* ====================================================================
+   Cell styles
+   ==================================================================== */
+.scan-name-cell strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scan-name-cell span {
+  display: block;
+  font-size: 12.5px;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.reports-date {
+  font-size: 14px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.reports-vulns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.reports-vulns.has-vulns {
+  color: #f87171;
+}
+
+.badge-secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 242, 254, 0.05);
+  color: #00f2fe;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  border: 1px solid rgba(0, 242, 254, 0.18);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.reports-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #60a5fa;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ====================================================================
+   Action buttons
+   ==================================================================== */
+.reports-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.report-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #cbd5e1;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.report-action-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f1f5f9;
+}
+
+.report-action-btn--view {
+  border-color: rgba(0, 242, 254, 0.25);
+  color: #00f2fe;
+}
+.report-action-btn--view:hover {
+  background: rgba(0, 242, 254, 0.08);
+  border-color: rgba(0, 242, 254, 0.45);
+}
+
+.report-action-btn--pdf {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  color: #052029;
+  border-color: transparent;
+}
+.report-action-btn--pdf:hover {
+  filter: brightness(1.08);
+}
+
+.report-action-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: report-action-spin 0.9s linear infinite;
+}
+
+@keyframes report-action-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ====================================================================
+   Empty / loading state
+   ==================================================================== */
+.reports-empty {
+  text-align: center;
+  padding: 80px 0;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.reports-empty-text {
+  margin-top: 6px;
+  font-size: 14px;
+  max-width: 380px;
+}
+
+.spin-icon {
+  animation: reports-refresh-spin 0.9s linear infinite;
+}
+
+@keyframes reports-refresh-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ====================================================================
+   Responsive: stack the header controls below ~960px so the search and
+   refresh button don't overflow.
+   ==================================================================== */
+@media (max-width: 960px) {
+  .reports-page {
+    padding: 28px 22px 60px;
+  }
+
+  .reports-card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reports-card-header > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .reports-search {
+    width: 100%;
+  }
+}
+
+/* Below ~760px the 6-column grid is genuinely too tight; we collapse to a
+   2-column stacked card per row. The labels become visually inline with the
+   data so a phone user can still scan the column meaning at a glance. */
+@media (max-width: 760px) {
+  .reports-table-head {
+    display: none;
+  }
+
+  .reports-table-row {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+    padding: 16px 14px;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    margin-top: 8px;
+  }
+
+  .scan-name-cell {
+    grid-column: 1 / -1;
+  }
+
+  .reports-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}

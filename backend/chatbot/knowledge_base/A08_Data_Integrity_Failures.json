@@ -1,0 +1,174 @@
+{
+  "owasp_id": "A08",
+  "category": "Data Integrity Failures",
+  "cwes": [
+    {
+      "cwe_id": "CWE-345",
+      "name": "Data Authenticity Failure",
+      "description": "Data Authenticity Failure occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use digital signatures or HMAC",
+        "Verify data source authenticity",
+        "Use secure communication channels"
+      ],
+      "fixation": [
+        "Add missing authenticity checks",
+        "Fix verification logic",
+        "Rotate compromised keys"
+      ],
+      "mitigation": [
+        "Log integrity check failures",
+        "Alert on tampering attempts",
+        "Monitor data sources"
+      ]
+    },
+    {
+      "cwe_id": "CWE-353",
+      "name": "Missing Integrity Validation",
+      "description": "Missing Integrity Validation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use checksums or hashes",
+        "Validate data before use",
+        "Apply integrity checks everywhere"
+      ],
+      "fixation": [
+        "Add missing validation logic",
+        "Implement hash verification",
+        "Fix data handling flow"
+      ],
+      "mitigation": [
+        "Log integrity failures",
+        "Alert on corrupted data",
+        "Isolate affected components"
+      ]
+    },
+    {
+      "cwe_id": "CWE-426",
+      "name": "Untrusted Search Path",
+      "description": "Untrusted Search Path occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use absolute paths",
+        "Avoid using user-controlled paths",
+        "Restrict executable directories"
+      ],
+      "fixation": [
+        "Replace relative paths with absolute",
+        "Remove unsafe path logic",
+        "Fix environment variables"
+      ],
+      "mitigation": [
+        "Log path resolution failures",
+        "Monitor execution paths",
+        "Restrict file permissions"
+      ]
+    },
+    {
+      "cwe_id": "CWE-494",
+      "name": "Unsigned Update",
+      "description": "Unsigned Update occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Sign updates digitally",
+        "Verify signature before install",
+        "Use trusted update sources"
+      ],
+      "fixation": [
+        "Add signature verification",
+        "Remove unsigned updates",
+        "Fix update mechanism"
+      ],
+      "mitigation": [
+        "Log update verification failures",
+        "Alert on tampered updates",
+        "Block unsafe updates"
+      ]
+    },
+    {
+      "cwe_id": "CWE-502",
+      "name": "Unsafe Deserialization",
+      "description": "Unsafe Deserialization occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Avoid deserializing untrusted data",
+        "Use safe serialization formats",
+        "Validate object structure"
+      ],
+      "fixation": [
+        "Replace unsafe deserialization",
+        "Add object validation",
+        "Remove dangerous classes"
+      ],
+      "mitigation": [
+        "Log deserialization errors",
+        "Monitor abnormal object creation",
+        "Block suspicious payloads"
+      ]
+    },
+    {
+      "cwe_id": "CWE-829",
+      "name": "Untrusted Component",
+      "description": "Untrusted Component occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use only trusted components",
+        "Verify component integrity",
+        "Review third-party libraries"
+      ],
+      "fixation": [
+        "Remove untrusted components",
+        "Replace with trusted versions",
+        "Verify dependencies"
+      ],
+      "mitigation": [
+        "Monitor component behavior",
+        "Alert on anomalies",
+        "Audit dependencies"
+      ]
+    },
+    {
+      "cwe_id": "CWE-915",
+      "name": "Object Attribute Manipulation",
+      "description": "Object Attribute Manipulation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use allowlist for object fields",
+        "Reject unexpected attributes",
+        "Validate object structure"
+      ],
+      "fixation": [
+        "Add attribute filtering",
+        "Fix mapping logic",
+        "Remove unsafe fields"
+      ],
+      "mitigation": [
+        "Log attribute manipulation attempts",
+        "Monitor abnormal object updates",
+        "Alert on misuse"
+      ]
+    },
+    {
+      "cwe_id": "CWE-1285",
+      "name": "Improper Update Validation",
+      "description": "Improper Update Validation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Validate update source",
+        "Verify update integrity",
+        "Use secure update channels"
+      ],
+      "fixation": [
+        "Fix update verification logic",
+        "Add missing validation steps",
+        "Rotate compromised keys"
+      ],
+      "mitigation": [
+        "Log update validation failures",
+        "Alert on suspicious updates",
+        "Disable unsafe updates"
+      ]
+    }
+  ]
+}

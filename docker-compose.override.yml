@@ -1,0 +1,5 @@
+services:
+  backend:
+    entrypoint: ["sh", "-lc"]
+    command:
+      - "python -m pip install --no-cache-dir --force-reinstall androguard==3.3.5 && python init_db.py && exec gunicorn -b 0.0.0.0:5000 app:app --log-level debug --access-logfile - --error-logfile - --capture-output"

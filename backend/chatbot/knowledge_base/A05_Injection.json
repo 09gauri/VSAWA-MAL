@@ -1,0 +1,254 @@
+{
+  "owasp_id": "A05",
+  "category": "Injection",
+  "cwes": [
+    {
+      "cwe_id": "CWE-20",
+      "name": "Improper Input Validation",
+      "description": "Input is not properly checked before processing.",
+      "impact": "Injection attacks, data corruption.",
+      "prevention": [
+        "Use allowlist validation",
+        "Validate type, length, format of input",
+        "Reject unexpected input"
+      ],
+      "fixation": [
+        "Add strict validation logic",
+        "Remove unsafe input handling"
+      ],
+      "mitigation": [
+        "Monitor abnormal input patterns"
+      ]
+    },
+    {
+      "cwe_id": "CWE-74",
+      "name": "Injection",
+      "description": "User input changes command or query behavior.",
+      "impact": "Remote code execution, data loss.",
+      "prevention": [
+        "Use parameterized APIs",
+        "Avoid dynamic command building"
+      ],
+      "fixation": [
+        "Replace string-based logic",
+        "Add input validation"
+      ],
+      "mitigation": [
+        "Log suspicious payloads"
+      ]
+    },
+    {
+      "cwe_id": "CWE-77",
+      "name": "Command Injection",
+      "description": "System commands built using user input.",
+      "impact": "Full system takeover.",
+      "prevention": [
+        "Avoid OS command calls",
+        "Use safe APIs"
+      ],
+      "fixation": [
+        "Remove shell execution",
+        "Escape all inputs"
+      ],
+      "mitigation": [
+        "Monitor command execution"
+      ]
+    },
+    {
+      "cwe_id": "CWE-78",
+      "name": "OS Command Injection",
+      "description": "Attackers inject OS commands.",
+      "impact": "Server compromise.",
+      "prevention": [
+        "Do not use system() or exec() with user input",
+        "Use allowlists"
+      ],
+      "fixation": [
+        "Refactor command logic",
+        "Block shell usage"
+      ],
+      "mitigation": [
+        "OS-level restrictions"
+      ]
+    },
+    {
+      "cwe_id": "CWE-79",
+      "name": "Cross Site Scripting",
+      "description": "Malicious script executed in browser.",
+      "impact": "Session theft, phishing.",
+      "prevention": [
+        "Encode output",
+        "Use CSP headers",
+        "Sanitize HTML"
+      ],
+      "fixation": [
+        "Fix vulnerable pages",
+        "Escape dynamic output"
+      ],
+      "mitigation": [
+        "Monitor script injection attempts"
+      ]
+    },
+    {
+      "cwe_id": "CWE-89",
+      "name": "SQL Injection",
+      "description": "SQL queries manipulated by user input.",
+      "impact": "Database compromise.",
+      "prevention": [
+        "Use prepared statements",
+        "Avoid dynamic SQL"
+      ],
+      "fixation": [
+        "Rewrite unsafe queries",
+        "Add input validation"
+      ],
+      "mitigation": [
+        "DB activity monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-90",
+      "name": "LDAP Injection",
+      "description": "LDAP queries modified by attackers.",
+      "impact": "Directory access bypass.",
+      "prevention": [
+        "Escape LDAP input",
+        "Use parameterized filters"
+      ],
+      "fixation": [
+        "Fix unsafe filters",
+        "Validate input"
+      ],
+      "mitigation": [
+        "LDAP query logging"
+      ]
+    },
+    {
+      "cwe_id": "CWE-91",
+      "name": "XPath Injection",
+      "description": "XPath queries altered by input.",
+      "impact": "Unauthorized XML access.",
+      "prevention": [
+        "Use safe XPath APIs",
+        "Escape user input"
+      ],
+      "fixation": [
+        "Rewrite XPath queries"
+      ],
+      "mitigation": [
+        "Monitor XML access"
+      ]
+    },
+    {
+      "cwe_id": "CWE-94",
+      "name": "Code Injection",
+      "description": "User input becomes executable code.",
+      "impact": "Remote execution.",
+      "prevention": [
+        "Never evaluate user input",
+        "Use safe interpreters"
+      ],
+      "fixation": [
+        "Remove eval-based logic"
+      ],
+      "mitigation": [
+        "Runtime behavior monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-95",
+      "name": "Eval Injection",
+      "description": "Input executed through eval.",
+      "impact": "System compromise.",
+      "prevention": [
+        "Avoid eval",
+        "Use safe parsing"
+      ],
+      "fixation": [
+        "Remove eval usage"
+      ],
+      "mitigation": [
+        "Audit code execution"
+      ]
+    },
+    {
+      "cwe_id": "CWE-116",
+      "name": "Improper Encoding",
+      "description": "Output not encoded correctly.",
+      "impact": "XSS, injection.",
+      "prevention": [
+        "Context-aware encoding",
+        "Use encoding libraries"
+      ],
+      "fixation": [
+        "Fix output logic"
+      ],
+      "mitigation": [
+        "Output validation checks"
+      ]
+    },
+    {
+      "cwe_id": "CWE-564",
+      "name": "Hibernate SQL Injection",
+      "description": "Unsafe ORM query construction.",
+      "impact": "Database manipulation.",
+      "prevention": [
+        "Use ORM parameter binding"
+      ],
+      "fixation": [
+        "Rewrite unsafe HQL"
+      ],
+      "mitigation": [
+        "DB monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-917",
+      "name": "Expression Language Injection",
+      "description": "EL expressions manipulated.",
+      "impact": "Logic abuse.",
+      "prevention": [
+        "Disable dynamic EL",
+        "Validate expressions"
+      ],
+      "fixation": [
+        "Remove unsafe EL usage"
+      ],
+      "mitigation": [
+        "Expression audit"
+      ]
+    },
+    {
+      "cwe_id": "CWE-943",
+      "name": "NoSQL Injection",
+      "description": "NoSQL queries altered.",
+      "impact": "Data exposure.",
+      "prevention": [
+        "Use query APIs",
+        "Validate JSON input"
+      ],
+      "fixation": [
+        "Fix unsafe queries"
+      ],
+      "mitigation": [
+        "Query monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-1336",
+      "name": "Template Injection",
+      "description": "Templates execute user input.",
+      "impact": "Remote code execution.",
+      "prevention": [
+        "Use safe template engines",
+        "Disable logic in templates"
+      ],
+      "fixation": [
+        "Fix template rendering"
+      ],
+      "mitigation": [
+        "Template behavior monitoring"
+      ]
+    }
+  ]
+}

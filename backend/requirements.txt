@@ -1,0 +1,20 @@
+flask==3.0.3
+flask-cors==4.0.1
+requests==2.32.3
+gunicorn==22.0.0
+flask-jwt-extended==4.7.1
+androguard==4.1.3
+reportlab==4.2.2
+
+# ---- malware-scan ML stack (PE binary classifiers) --------------------------
+# These were brought in when the malware-detection module was merged into VSAWA.
+# Versions match what the original `malware-detection` project shipped, so the
+# pre-trained joblib/txt model artefacts under backend/malware_scan/*/weights/
+# stay compatible.
+lief==0.16.4
+lightgbm==3.3.2
+xgboost==3.0.0
+scikit-learn==1.6.1
+joblib==1.4.2
+pandas==2.2.3
+numpy==2.2.3

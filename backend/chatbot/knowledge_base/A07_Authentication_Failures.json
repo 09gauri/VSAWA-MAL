@@ -1,0 +1,216 @@
+{
+  "owasp_id": "A07",
+  "category": "Authentication Failures",
+  "cwes": [
+    {
+      "cwe_id": "CWE-287",
+      "name": "Improper Authentication",
+      "description": "Improper Authentication occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use strong authentication mechanisms",
+        "Implement multi-factor authentication",
+        "Validate credentials securely"
+      ],
+      "fixation": [
+        "Fix broken authentication logic",
+        "Remove insecure auth bypass paths",
+        "Retest authentication flows"
+      ],
+      "mitigation": [
+        "Log authentication failures",
+        "Alert on suspicious logins",
+        "Monitor login behavior"
+      ]
+    },
+    {
+      "cwe_id": "CWE-295",
+      "name": "Improper Certificate Validation",
+      "description": "Improper Certificate Validation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Validate certificates properly",
+        "Use trusted certificate authorities",
+        "Reject invalid certificates"
+      ],
+      "fixation": [
+        "Fix certificate validation logic",
+        "Remove trust of self-signed certs",
+        "Update validation libraries"
+      ],
+      "mitigation": [
+        "Log TLS errors",
+        "Monitor certificate failures",
+        "Alert on MITM attempts"
+      ]
+    },
+    {
+      "cwe_id": "CWE-297",
+      "name": "Host Mismatch Validation",
+      "description": "Host Mismatch Validation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Match certificate hostname correctly",
+        "Validate CN and SAN fields",
+        "Reject mismatched hosts"
+      ],
+      "fixation": [
+        "Fix hostname verification",
+        "Remove bypass conditions",
+        "Update TLS configuration"
+      ],
+      "mitigation": [
+        "Log host mismatch events",
+        "Monitor TLS handshakes",
+        "Alert on repeated mismatches"
+      ]
+    },
+    {
+      "cwe_id": "CWE-306",
+      "name": "Missing Authentication",
+      "description": "Missing Authentication occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Require authentication for all sensitive endpoints",
+        "Protect APIs and admin panels",
+        "Use centralized auth middleware"
+      ],
+      "fixation": [
+        "Add missing authentication checks",
+        "Remove public access to private features",
+        "Retest all routes"
+      ],
+      "mitigation": [
+        "Log unauthenticated access",
+        "Alert on unauthorized access",
+        "Monitor endpoint usage"
+      ]
+    },
+    {
+      "cwe_id": "CWE-307",
+      "name": "Brute Force Protection Missing",
+      "description": "Brute Force Protection Missing occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Implement login rate limiting",
+        "Use account lockout after failures",
+        "Add CAPTCHA on retries"
+      ],
+      "fixation": [
+        "Add rate limiting logic",
+        "Enable lockout policies",
+        "Fix missing controls"
+      ],
+      "mitigation": [
+        "Monitor repeated failures",
+        "Alert on brute force patterns",
+        "Block abusive IPs"
+      ]
+    },
+    {
+      "cwe_id": "CWE-308",
+      "name": "Credential Reuse",
+      "description": "Credential Reuse occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Block reused passwords",
+        "Encourage unique credentials",
+        "Use breach password checks"
+      ],
+      "fixation": [
+        "Force password reset",
+        "Invalidate compromised credentials",
+        "Update password rules"
+      ],
+      "mitigation": [
+        "Monitor unusual logins",
+        "Alert on reused credentials",
+        "Add step-up authentication"
+      ]
+    },
+    {
+      "cwe_id": "CWE-384",
+      "name": "Session Fixation",
+      "description": "Session Fixation occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Regenerate session after login",
+        "Use secure session cookies",
+        "Invalidate old sessions"
+      ],
+      "fixation": [
+        "Fix session regeneration logic",
+        "Remove fixed session IDs",
+        "Retest session handling"
+      ],
+      "mitigation": [
+        "Log session anomalies",
+        "Monitor session reuse",
+        "Alert on hijacking attempts"
+      ]
+    },
+    {
+      "cwe_id": "CWE-613",
+      "name": "Insufficient Session Expiration",
+      "description": "Insufficient Session Expiration occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Set proper session timeout",
+        "Expire sessions on logout",
+        "Use idle timeout"
+      ],
+      "fixation": [
+        "Fix timeout configuration",
+        "Invalidate stale sessions",
+        "Update session logic"
+      ],
+      "mitigation": [
+        "Monitor long-lived sessions",
+        "Alert on abnormal session age",
+        "Force re-authentication"
+      ]
+    },
+    {
+      "cwe_id": "CWE-798",
+      "name": "Hard-coded Credentials",
+      "description": "Hard-coded Credentials occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Never hard-code credentials",
+        "Use secret managers",
+        "Store secrets securely"
+      ],
+      "fixation": [
+        "Remove hard-coded secrets",
+        "Rotate compromised credentials",
+        "Update configuration"
+      ],
+      "mitigation": [
+        "Scan code for secrets",
+        "Monitor secret usage",
+        "Alert on exposure"
+      ]
+    },
+    {
+      "cwe_id": "CWE-521",
+      "name": "Weak Password Requirements",
+      "description": "Weak Password Requirements occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Enforce strong password policy",
+        "Use length and complexity rules",
+        "Block common passwords"
+      ],
+      "fixation": [
+        "Update password rules",
+        "Force weak users to reset",
+        "Fix validation logic"
+      ],
+      "mitigation": [
+        "Monitor weak password usage",
+        "Alert on risky accounts",
+        "Apply step-up verification"
+      ]
+    }
+  ]
+}

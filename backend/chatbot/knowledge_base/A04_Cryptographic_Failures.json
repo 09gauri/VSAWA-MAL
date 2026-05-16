@@ -1,0 +1,180 @@
+{
+  "owasp_id": "A04",
+  "category": "Cryptographic Failures",
+  "cwes": [
+    {
+      "cwe_id": "CWE-310",
+      "name": "Cryptographic Issues",
+      "description": "Improper use or design of cryptography.",
+      "impact": "Sensitive data exposure, data tampering.",
+      "prevention": [
+        "Use standard cryptographic libraries",
+        "Follow industry crypto guidelines",
+        "Review cryptographic design"
+      ],
+      "fixation": [
+        "Replace custom crypto logic",
+        "Fix incorrect crypto usage"
+      ],
+      "mitigation": [
+        "Crypto code reviews",
+        "Security testing"
+      ]
+    },
+    {
+      "cwe_id": "CWE-319",
+      "name": "Cleartext Transmission",
+      "description": "Sensitive data sent without encryption.",
+      "impact": "Data sniffing, credential theft.",
+      "prevention": [
+        "Use HTTPS/TLS everywhere",
+        "Disable insecure protocols"
+      ],
+      "fixation": [
+        "Encrypt all data in transit",
+        "Configure TLS properly"
+      ],
+      "mitigation": [
+        "Monitor network traffic",
+        "TLS configuration audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-321",
+      "name": "Hard-coded Cryptographic Key",
+      "description": "Encryption keys embedded in code.",
+      "impact": "Key compromise, data decryption.",
+      "prevention": [
+        "Use secure key storage",
+        "Load keys from environment or vault"
+      ],
+      "fixation": [
+        "Remove hard-coded keys",
+        "Rotate compromised keys"
+      ],
+      "mitigation": [
+        "Key usage monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-322",
+      "name": "Weak Key Generation",
+      "description": "Keys generated using weak methods.",
+      "impact": "Brute-force attacks.",
+      "prevention": [
+        "Use cryptographically secure RNG",
+        "Follow key length standards"
+      ],
+      "fixation": [
+        "Regenerate weak keys",
+        "Update key generation logic"
+      ],
+      "mitigation": [
+        "Key audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-326",
+      "name": "Weak Encryption",
+      "description": "Use of weak encryption algorithms.",
+      "impact": "Data can be decrypted easily.",
+      "prevention": [
+        "Use strong algorithms like AES-256",
+        "Avoid deprecated algorithms"
+      ],
+      "fixation": [
+        "Replace weak encryption",
+        "Re-encrypt sensitive data"
+      ],
+      "mitigation": [
+        "Crypto configuration monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-327",
+      "name": "Broken Crypto Algorithm",
+      "description": "Use of broken or compromised algorithms.",
+      "impact": "Encryption bypass.",
+      "prevention": [
+        "Track crypto deprecation",
+        "Use recommended algorithms"
+      ],
+      "fixation": [
+        "Remove broken algorithms",
+        "Migrate to secure crypto"
+      ],
+      "mitigation": [
+        "Security advisories monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-328",
+      "name": "Weak Hash",
+      "description": "Use of weak hashing algorithms.",
+      "impact": "Password cracking.",
+      "prevention": [
+        "Use SHA-256, bcrypt, Argon2",
+        "Avoid MD5 and SHA-1"
+      ],
+      "fixation": [
+        "Replace weak hashes",
+        "Re-hash stored data"
+      ],
+      "mitigation": [
+        "Password security audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-330",
+      "name": "Insufficient Randomness",
+      "description": "Predictable random values.",
+      "impact": "Token and key prediction.",
+      "prevention": [
+        "Use secure random generators",
+        "Avoid predictable seeds"
+      ],
+      "fixation": [
+        "Replace weak RNG",
+        "Update random logic"
+      ],
+      "mitigation": [
+        "Randomness testing"
+      ]
+    },
+    {
+      "cwe_id": "CWE-331",
+      "name": "Low Entropy",
+      "description": "Low unpredictability in values.",
+      "impact": "Guessable secrets.",
+      "prevention": [
+        "Ensure sufficient entropy sources",
+        "Use OS entropy pools"
+      ],
+      "fixation": [
+        "Increase entropy usage",
+        "Regenerate secrets"
+      ],
+      "mitigation": [
+        "Entropy monitoring"
+      ]
+    },
+    {
+      "cwe_id": "CWE-522",
+      "name": "Weak Credential Protection",
+      "description": "Credentials stored or transmitted insecurely.",
+      "impact": "Account compromise.",
+      "prevention": [
+        "Hash passwords securely",
+        "Use salted hashes",
+        "Encrypt stored credentials"
+      ],
+      "fixation": [
+        "Re-hash passwords",
+        "Update storage logic"
+      ],
+      "mitigation": [
+        "Credential breach monitoring"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "owasp_id": "A02",
+  "category": "Security Misconfiguration",
+  "cwes": [
+    {
+      "cwe_id": "CWE-2",
+      "name": "Environment Misconfiguration",
+      "description": "Incorrect environment settings expose applications to security risks.",
+      "impact": "Data leakage, unauthorized access, system takeover.",
+      "prevention": [
+        "Separate dev, test, and production environments",
+        "Disable debug mode in production",
+        "Use secure configuration templates",
+        "Harden server and OS settings"
+      ],
+      "fixation": [
+        "Remove unsafe environment variables",
+        "Disable debug features",
+        "Apply secure configuration baseline"
+      ],
+      "mitigation": [
+        "Continuous configuration monitoring",
+        "Environment audits"
+      ]
+    },
+    {
+      "cwe_id": "CWE-11",
+      "name": "ASP.NET Misconfiguration",
+      "description": "Improper ASP.NET settings expose internal application data.",
+      "impact": "Information disclosure, remote exploitation.",
+      "prevention": [
+        "Disable detailed errors",
+        "Hide framework version",
+        "Secure web.config settings"
+      ],
+      "fixation": [
+        "Update insecure settings",
+        "Restrict error details"
+      ],
+      "mitigation": [
+        "Monitor configuration changes"
+      ]
+    },
+    {
+      "cwe_id": "CWE-16",
+      "name": "Configuration Error",
+      "description": "Incorrect system or app configuration weakens security.",
+      "impact": "Unauthorized access, service misuse.",
+      "prevention": [
+        "Use configuration reviews",
+        "Apply secure defaults",
+        "Automate configuration validation"
+      ],
+      "fixation": [
+        "Correct faulty settings",
+        "Remove unused services"
+      ],
+      "mitigation": [
+        "Configuration auditing"
+      ]
+    },
+    {
+      "cwe_id": "CWE-209",
+      "name": "Information Exposure Through Error Messages",
+      "description": "Error messages reveal internal system details.",
+      "impact": "Attack surface disclosure.",
+      "prevention": [
+        "Use generic error messages",
+        "Hide stack traces from users"
+      ],
+      "fixation": [
+        "Replace verbose errors",
+        "Disable debug errors"
+      ],
+      "mitigation": [
+        "Monitor error logs"
+      ]
+    },
+    {
+      "cwe_id": "CWE-215",
+      "name": "Debug Information Exposure",
+      "description": "Debug data visible to users.",
+      "impact": "Leak of internal logic.",
+      "prevention": [
+        "Disable debug mode in production",
+        "Remove test endpoints"
+      ],
+      "fixation": [
+        "Remove debug code",
+        "Restrict debug access"
+      ],
+      "mitigation": [
+        "Scan for debug artifacts"
+      ]
+    },
+    {
+      "cwe_id": "CWE-497",
+      "name": "Exposure of System Data",
+      "description": "System details are publicly accessible.",
+      "impact": "Infrastructure reconnaissance.",
+      "prevention": [
+        "Hide system banners",
+        "Disable version exposure"
+      ],
+      "fixation": [
+        "Remove banner disclosures",
+        "Secure server headers"
+      ],
+      "mitigation": [
+        "Monitor server responses"
+      ]
+    },
+    {
+      "cwe_id": "CWE-548",
+      "name": "Directory Listing Exposure",
+      "description": "Web server shows directory contents.",
+      "impact": "Source code and file exposure.",
+      "prevention": [
+        "Disable directory listing",
+        "Restrict file access"
+      ],
+      "fixation": [
+        "Turn off auto-indexing",
+        "Block sensitive folders"
+      ],
+      "mitigation": [
+        "Monitor directory access"
+      ]
+    },
+    {
+      "cwe_id": "CWE-611",
+      "name": "XML External Entity",
+      "description": "XML parser processes external entities.",
+      "impact": "File disclosure, SSRF.",
+      "prevention": [
+        "Disable external entities",
+        "Use secure XML parsers"
+      ],
+      "fixation": [
+        "Update parser config",
+        "Block external entities"
+      ],
+      "mitigation": [
+        "Scan XML traffic"
+      ]
+    },
+    {
+      "cwe_id": "CWE-756",
+      "name": "Missing Security Header",
+      "description": "Security headers not configured.",
+      "impact": "XSS, clickjacking risks.",
+      "prevention": [
+        "Add CSP, HSTS, X-Frame-Options",
+        "Enable secure headers by default"
+      ],
+      "fixation": [
+        "Configure missing headers",
+        "Test headers"
+      ],
+      "mitigation": [
+        "Monitor response headers"
+      ]
+    },
+    {
+      "cwe_id": "CWE-778",
+      "name": "Insufficient Logging",
+      "description": "Security events not logged.",
+      "impact": "Delayed attack detection.",
+      "prevention": [
+        "Log authentication and access events",
+        "Store logs securely"
+      ],
+      "fixation": [
+        "Add missing logs",
+        "Centralize logging"
+      ],
+      "mitigation": [
+        "Monitor log anomalies"
+      ]
+    },
+    {
+      "cwe_id": "CWE-1004",
+      "name": "Insecure Cookie Flag",
+      "description": "Cookies missing security attributes.",
+      "impact": "Session hijacking.",
+      "prevention": [
+        "Use Secure, HttpOnly, SameSite flags"
+      ],
+      "fixation": [
+        "Update cookie configuration"
+      ],
+      "mitigation": [
+        "Monitor cookie usage"
+      ]
+    },
+    {
+      "cwe_id": "CWE-1032",
+      "name": "Security Setting Misconfiguration",
+      "description": "Security features not properly configured.",
+      "impact": "Weak defense mechanisms.",
+      "prevention": [
+        "Review security settings regularly",
+        "Use hardened templates"
+      ],
+      "fixation": [
+        "Correct misconfigured settings"
+      ],
+      "mitigation": [
+        "Continuous configuration scanning"
+      ]
+    }
+  ]
+}

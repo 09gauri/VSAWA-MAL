@@ -1,0 +1,174 @@
+{
+  "owasp_id": "A06",
+  "category": "Insecure Design",
+  "cwes": [
+    {
+      "cwe_id": "CWE-73",
+      "name": "External Control of File Name",
+      "description": "External Control of File Name occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Never trust file names from user input",
+        "Use fixed server-side file paths",
+        "Apply allowlist for file access"
+      ],
+      "fixation": [
+        "Remove direct user control on file paths",
+        "Use mapping instead of raw file names",
+        "Restrict accessible directories"
+      ],
+      "mitigation": [
+        "Log invalid file access attempts",
+        "Restrict file system permissions",
+        "Monitor abnormal file access"
+      ]
+    },
+    {
+      "cwe_id": "CWE-183",
+      "name": "Permissive Whitelist",
+      "description": "Permissive Whitelist occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Design strict allowlists",
+        "Avoid wildcard-based rules",
+        "Validate every input explicitly"
+      ],
+      "fixation": [
+        "Tighten existing allowlist rules",
+        "Remove overly broad conditions",
+        "Rebuild validation logic"
+      ],
+      "mitigation": [
+        "Monitor bypass attempts",
+        "Audit validation logic regularly",
+        "Log invalid inputs"
+      ]
+    },
+    {
+      "cwe_id": "CWE-235",
+      "name": "Improper Parameter Handling",
+      "description": "Improper Parameter Handling occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Validate type, range, and format",
+        "Reject unexpected parameters",
+        "Use strict schemas"
+      ],
+      "fixation": [
+        "Add missing validation logic",
+        "Remove unused parameters",
+        "Correct parameter mapping"
+      ],
+      "mitigation": [
+        "Log malformed requests",
+        "Apply rate limiting",
+        "Monitor repeated failures"
+      ]
+    },
+    {
+      "cwe_id": "CWE-256",
+      "name": "Plaintext Password Storage",
+      "description": "Plaintext Password Storage occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Always hash passwords",
+        "Use bcrypt, Argon2 or PBKDF2",
+        "Never store plaintext credentials"
+      ],
+      "fixation": [
+        "Migrate stored passwords to hashed form",
+        "Force password reset after fix",
+        "Remove plaintext fields"
+      ],
+      "mitigation": [
+        "Monitor credential access",
+        "Encrypt database backups",
+        "Restrict DB access"
+      ]
+    },
+    {
+      "cwe_id": "CWE-657",
+      "name": "Violation of Secure Design",
+      "description": "Violation of Secure Design occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Apply security-by-design principles",
+        "Perform threat modeling",
+        "Review architecture for risks"
+      ],
+      "fixation": [
+        "Redesign insecure components",
+        "Remove unsafe assumptions",
+        "Refactor risky flows"
+      ],
+      "mitigation": [
+        "Add compensating security controls",
+        "Monitor high-risk areas",
+        "Regular design reviews"
+      ]
+    },
+    {
+      "cwe_id": "CWE-693",
+      "name": "Protection Mechanism Failure",
+      "description": "Protection Mechanism Failure occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Ensure all security controls are active",
+        "Test failure scenarios",
+        "Avoid disabling protections"
+      ],
+      "fixation": [
+        "Repair broken security mechanisms",
+        "Re-enable disabled controls",
+        "Fix misconfigurations"
+      ],
+      "mitigation": [
+        "Add monitoring for control failures",
+        "Alert on security bypass",
+        "Audit protections"
+      ]
+    },
+    {
+      "cwe_id": "CWE-840",
+      "name": "Business Logic Errors",
+      "description": "Business Logic Errors occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Design logic with misuse cases",
+        "Validate business rules strictly",
+        "Review workflows for abuse"
+      ],
+      "fixation": [
+        "Correct flawed business logic",
+        "Add missing rule checks",
+        "Fix process gaps"
+      ],
+      "mitigation": [
+        "Monitor abnormal behavior",
+        "Add transaction limits",
+        "Alert on suspicious actions"
+      ]
+    },
+    {
+      "cwe_id": "CWE-927",
+      "name": "Improper Authorization Design",
+      "description": "Improper Authorization Design occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Design role-based access control",
+        "Define access rules clearly",
+        "Apply least privilege principle"
+      ],
+      "fixation": [
+        "Fix incorrect access mappings",
+        "Redesign broken authorization flow",
+        "Remove over-privileged roles"
+      ],
+      "mitigation": [
+        "Log authorization failures",
+        "Alert on privilege escalation",
+        "Audit access regularly"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "owasp_id": "A09",
+  "category": "Logging & Monitoring Failures",
+  "cwes": [
+    {
+      "cwe_id": "CWE-117",
+      "name": "Log Injection",
+      "description": "Log Injection occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Sanitize all data before logging",
+        "Escape special characters in logs",
+        "Never log raw user input"
+      ],
+      "fixation": [
+        "Add log sanitization",
+        "Fix unsafe logging logic",
+        "Remove dangerous log formats"
+      ],
+      "mitigation": [
+        "Monitor abnormal log entries",
+        "Alert on log tampering",
+        "Protect log files"
+      ]
+    },
+    {
+      "cwe_id": "CWE-223",
+      "name": "Missing Security Logs",
+      "description": "Missing Security Logs occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Log all security-relevant events",
+        "Log authentication and authorization actions",
+        "Log critical system changes"
+      ],
+      "fixation": [
+        "Add missing security logs",
+        "Fix incomplete logging logic",
+        "Review logging coverage"
+      ],
+      "mitigation": [
+        "Monitor log gaps",
+        "Alert when logs stop",
+        "Audit log generation"
+      ]
+    },
+    {
+      "cwe_id": "CWE-532",
+      "name": "Sensitive Info in Logs",
+      "description": "Sensitive Info in Logs occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Never log passwords or secrets",
+        "Mask sensitive fields",
+        "Use log redaction"
+      ],
+      "fixation": [
+        "Remove sensitive data from logs",
+        "Rotate compromised logs",
+        "Fix logging format"
+      ],
+      "mitigation": [
+        "Monitor log access",
+        "Restrict log permissions",
+        "Alert on log leaks"
+      ]
+    },
+    {
+      "cwe_id": "CWE-778",
+      "name": "Insufficient Logging",
+      "description": "Insufficient Logging occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Define logging requirements",
+        "Log all security events",
+        "Use centralized logging"
+      ],
+      "fixation": [
+        "Add missing log points",
+        "Fix incomplete logs",
+        "Improve log detail"
+      ],
+      "mitigation": [
+        "Monitor logging health",
+        "Alert on missing logs",
+        "Audit log quality"
+      ]
+    },
+    {
+      "cwe_id": "CWE-779",
+      "name": "Improper Logging",
+      "description": "Improper Logging occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Use standard log format",
+        "Include time, user and action",
+        "Avoid ambiguous log messages"
+      ],
+      "fixation": [
+        "Fix unclear log entries",
+        "Standardize log structure",
+        "Improve log consistency"
+      ],
+      "mitigation": [
+        "Monitor log accuracy",
+        "Review logs regularly",
+        "Alert on malformed logs"
+      ]
+    },
+    {
+      "cwe_id": "CWE-942",
+      "name": "Overly Permissive Cross Domain",
+      "description": "Overly Permissive Cross Domain occurs when security controls are improperly implemented or validated.",
+      "impact": "May lead to data leakage, unauthorized access, service disruption, or system compromise.",
+      "prevention": [
+        "Restrict cross-domain access",
+        "Use strict CORS rules",
+        "Avoid wildcard origins"
+      ],
+      "fixation": [
+        "Fix CORS configuration",
+        "Remove overly broad rules",
+        "Revalidate allowed domains"
+      ],
+      "mitigation": [
+        "Monitor cross-domain requests",
+        "Alert on abnormal access",
+        "Audit CORS policy"
+      ]
+    }
+  ]
+}
